@@ -1,4 +1,4 @@
-var koa = require('koa');
+var app = require('koa')();
 var logger = require('koa-logger');
 var bodyParser=require('koa-bodyparser');
 var staticCache=require('koa-static-cache');
@@ -11,7 +11,7 @@ var scheme=require('koa-scheme');
 var router=require('koa-frouter');
 var render=require('co-ejs');
 var config=require('config-lite');
-
+var routerCache=require('koa-router-cache');
 var merge=require('merge-descriptors');
 var core=require('./lib/core');
 var renderConf=require(config.renderConf);
@@ -29,7 +29,7 @@ app.use(session({
 app.use(flash());
 
 app.use(scheme(config.schemeConf));
-app.use(routerCache(app,config.routerCacheConf));
+// app.use(routerCache(app,config.routerCacheConf));
 app.use(gzip());
 app.use(render(app,renderConf));
 app.use(router(app,config.routerConf));
